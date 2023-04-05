@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{margin: 0;padding: 0;}
+			canvas{display: block;width: 100vw;height: 100vh;background-color: #000000;}
+		</style>
+	</head>
+	<body>
+		<canvas></canvas>
+	</body>
+	<script>
+		const cvs=document.querySelector('canvas');//获取画布标签
+		const ctx=cvs.getContext('2d');//声明画布
+		function init(){
+			cvs.width=window.innerWidth*devicePixelRatio;//真实的像素宽度
+			cvs.height=window.innerHeight*devicePixelRatio;//真实的像素高度
+		}
+		init();
+		// 画布内容的相关操作
+		const fontSize=20*devicePixelRatio;
+		/* ctx.font=`${fontSize}px "Roboto Mono"`;//随着页面的放大缩小，字体大小也会随着变化
+		ctx.fillStyle='#fff';//画布文本颜色
+		ctx.fillText('Love Story!',300,300);//画布的文字与大小 */
+		// 如果字体大小看做列宽，画布的宽度/每一列的宽度
+		const columnCount=Math.floor(cvs.width/fontSize);//取整
+		
+		const charIndex=new Array(columnCount).fill(0);//记录文字下一次出场的顺序
+		
+		function draw(){
+			ctx.fillStyle='rgba(0,0,0,0.1)';
+			ctx.fillRect(0,0,cvs.width,cvs.height);
+			ctx.fillStyle='#6be445';
+			// 横向对齐 ctx.textAlign=' center right '
+			// 纵向对齐
+			ctx.textBaseline='top';//顶端对齐
+			for(let i=0;i<columnCount;i++){
+				const text=getRandomChar();//随机值
+				const x=i*fontSize;//x轴坐标
+				const y=charIndex[i]*fontSize;//y轴坐标
+				ctx.fillText(text,x,y)
+				if(y>cvs.height && Math.random()>0.99){
+					charIndex[i]=0
+				}else{
+					charIndex[i]++
+				}
+			}
+		}
+		//随机函数
+		function getRandomChar(){
+			const str='0123456789abcdefghigklmnopqretuvwxyz';
+			return str[Math.floor(Math.random()*str.length)]
+		}
+		draw()
+		setInterval(()=>{
+			draw()
+		},30)
+	</script>
+</html>
