@@ -21,10 +21,6 @@
 		init();
 		// 画布内容的相关操作
 		const fontSize=20*devicePixelRatio;
-		/* ctx.font=`${fontSize}px "Roboto Mono"`;//随着页面的放大缩小，字体大小也会随着变化
-		ctx.fillStyle='#fff';//画布文本颜色
-		ctx.fillText('Love Story!',300,300);//画布的文字与大小 */
-		// 如果字体大小看做列宽，画布的宽度/每一列的宽度
 		const columnCount=Math.floor(cvs.width/fontSize);//取整
 		
 		const charIndex=new Array(columnCount).fill(0);//记录文字下一次出场的顺序
@@ -33,7 +29,6 @@
 			ctx.fillStyle='rgba(0,0,0,0.1)';
 			ctx.fillRect(0,0,cvs.width,cvs.height);
 			ctx.fillStyle='#6be445';
-			// 横向对齐 ctx.textAlign=' center right '
 			// 纵向对齐
 			ctx.textBaseline='top';//顶端对齐
 			for(let i=0;i<columnCount;i++){
